@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Task1.MainPage"
+             Title="Регистрация студента">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+            <Image Source="dotnet_bot.png"
+                   Aspect="AspectFit"
+                   HeightRequest="100"
+                   Margin="0,0,0,10" />
+
+            <Label Text="Анкета для регистрации студента"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,10" />
+
+            <Grid RowDefinitions="Auto,Auto,Auto"
+                  ColumnDefinitions="Auto,*"
+                  RowSpacing="10"
+                  ColumnSpacing="10">
+
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="Группа:"
+                       FontSize="16"
+                       FontAttributes="None"
+                       VerticalOptions="Center" />
+                <Entry Grid.Row="0" Grid.Column="1"
+                       x:Name="GroupEntry"
+                       Placeholder="Например, ИВТ-21"
+                       Keyboard="Default"
+                       MaxLength="15" />
+
+                <Label Grid.Row="1" Grid.Column="0"
+                       Text="ФИО:"
+                       FontSize="16"
+                       FontAttributes="None"
+                       VerticalOptions="Center" />
+                <Entry Grid.Row="1" Grid.Column="1"
+                       x:Name="FioEntry"
+                       Placeholder="Иванов Иван Иванович"
+                       Keyboard="Text"
+                       MaxLength="60" />
+
+                <Label Grid.Row="2" Grid.Column="0"
+                       Text="Факультет:"
+                       FontSize="16"
+                       FontAttributes="None"
+                       VerticalOptions="Center" />
+                <Picker Grid.Row="2" Grid.Column="1"
+                        x:Name="FacultyPicker"
+                        Title="Выберите факультет">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>ИРИТ-РТФ</x:String>
+                            <x:String>ИЕНиМ</x:String>
+                            <x:String>ИнЭУ</x:String>
+                            <x:String>УГИ</x:String>
+                            <x:String>ИСА</x:String>
+                            <x:String>ИНМТ</x:String>
+                            <x:String>УралЭНИН</x:String>
+                            <x:String>ФТИ</x:String>
+                            <x:String>ХТИ</x:String>
+                            <x:String>ИнФО</x:String>
+                            <x:String>ИФКСиМП</x:String>
+                            <x:String>ИГУП</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Grid>
+
+            <Label Text="Курс:"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+            <HorizontalStackLayout Spacing="5">
+                <RadioButton x:Name="Course1Radio" Content="1" GroupName="Course" Value="1" />
+                <RadioButton x:Name="Course2Radio" Content="2" GroupName="Course" Value="2" />
+                <RadioButton x:Name="Course3Radio" Content="3" GroupName="Course" Value="3" />
+                <RadioButton x:Name="Course4Radio" Content="4" GroupName="Course" Value="4" />
+            </HorizontalStackLayout>
+
+            <Label Text="{Binding Source={x:Reference AgeStepper}, Path=Value, Mode=OneWay, StringFormat='Возраст: {0}'}"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+            <Stepper x:Name="AgeStepper"
+                     Minimum="16"
+                     Maximum="60"
+                     Value="18"
+                     Increment="1" />
+
+            <Label Text="Дата поступления:"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+            <DatePicker x:Name="EnrollDatePicker"
+                        Format="dd.MM.yyyy"
+                        MinimumDate="01/01/2015"
+                        MaximumDate="12/31/2026"
+                        Date="09/01/2025" />
+
+            <Label Text="Хобби:"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+            <HorizontalStackLayout Spacing="5">
+                <CheckBox x:Name="SportCheckBox" IsChecked="False" Color="Blue" />
+                <Label Text="Спорт" FontSize="14" FontAttributes="None" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="5">
+                <CheckBox x:Name="MusicCheckBox" IsChecked="False" Color="Blue" />
+                <Label Text="Музыка" FontSize="14" FontAttributes="None" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="5">
+                <CheckBox x:Name="GamesCheckBox" IsChecked="False" Color="Blue" />
+                <Label Text="Игры" FontSize="14" FontAttributes="None" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Editor x:Name="HobbyEditor"
+                    Placeholder="Другие хобби"
+                    AutoSize="TextChanges"
+                    MaxLength="200" />
+
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                <Switch x:Name="AgreeSwitch" IsToggled="False" OnColor="Green" />
+                <Label Text="Согласен на обработку данных"
+                       FontSize="14"
+                       FontAttributes="None"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions="Auto"
+                  ColumnSpacing="10"
+                  Margin="0,10,0,0">
+                <Button Grid.Row="0" Grid.Column="0"
+                        x:Name="ShowButton"
+                        Text="Показать результат"
+                        IsEnabled="{Binding Source={x:Reference AgreeSwitch}, Path=IsToggled, Mode=OneWay}"
+                        Clicked="OnShowClicked" />
+                <Button Grid.Row="0" Grid.Column="1"
+                        x:Name="ClearButton"
+                        Text="Очистить"
+                        Clicked="OnClearClicked" />
+            </Grid>
+
+            <Label x:Name="ResultLabel"
+                   Text=""
+                   FontSize="14"
+                   FontAttributes="None"
+                   IsVisible="False"
+                   Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
